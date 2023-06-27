@@ -7,6 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 DEBUG = config('DEBUG', default=False, cast=bool)
+PROD = config('PROD', default=False, cast=bool)
 
 
 LOCAL_APPS = [
@@ -24,8 +25,8 @@ THEME_APPS = [
 ]
 
 JAZZMIN_SETTINGS = {
-    "site_title": "Shcool",
-    "site_header": "shcool",
+    "site_title": "School",
+    "site_header": "school",
     "site_logo_classes": "img-circle",
     "site_icon": '/assets/icons/admin_logo.svg',
     "welcome_sign": "Добро пожаловать в панель администратора",
@@ -232,8 +233,15 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
+EMAIL_BACKEND = config('EMAIL_BACKEND')
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = config('EMAIL_PORT')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS')
 
-if DEBUG:
+
+if not PROD:
     from .local import *
 else:
     from .production import *
