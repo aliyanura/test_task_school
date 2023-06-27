@@ -5,12 +5,13 @@ from src.users.managers import UserManager
 
 
 class Teacher(AbstractBaseUser, PermissionsMixin, BaseModel):
-    phone_number = models.CharField(max_length=150, blank=False,
-                                null=False, unique=True,
-                                verbose_name=("Номер телефона"))
+    phone_number = models.CharField(max_length=15, blank=False,
+                                    null=False, unique=True,
+                                    verbose_name=("Номер телефона"))
     password = models.CharField(max_length=128, blank=True,
                                 null=True, verbose_name=("Пароль"))
-    subject = models.CharField(max_length=350, verbose_name='Предмет')
+    subject = models.CharField(max_length=350, null=True,
+                               verbose_name='Предмет')
     is_active = models.BooleanField(default=True,
                                     verbose_name=("Является активным"))
     is_staff = models.BooleanField(
