@@ -1,9 +1,6 @@
-import random
 from typing import Tuple
-from django.db import transaction
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
-from django.core.mail import EmailMessage
 from src.users.models import Teacher
 from src.common.exceptions import ObjectNotFoundException
 from src.common.services import Service
