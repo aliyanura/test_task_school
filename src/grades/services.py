@@ -22,3 +22,8 @@ class StudentService(Service):
             grade=grade
         )
         SendEmailService.send_email(student)
+
+    @classmethod
+    def mailing(cls, message):
+        emails = [student.email for student in cls.filter()]
+        SendEmailService.mailing(message, emails)

@@ -24,3 +24,7 @@ class StudentSerializer(serializers.ModelSerializer):
         model = Student
         fields = ('id', 'full_name', 'email', 'birth_date', 'adress',
                   'sex', 'photo', 'grade_id', 'grade')
+
+
+class MailingSerializer(serializers.Serializer):
+    message = serializers.CharField()

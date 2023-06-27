@@ -1,11 +1,13 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.views import APIView
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from src.grades.services import StudentService
-from src.grades.serializers import StudentSerializer
+from src.grades.serializers import StudentSerializer,\
+                                   MailingSerializer
 
 
 
@@ -27,3 +29,16 @@ class StudentAPIView(ModelViewSet):
                         status=status.HTTP_201_CREATED)
 
 
+class MailingAPIView(APIView):
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = MailingSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data,)
+        serializer.is_valid(raise_exception=True)
+        StudentService.mailing(
+            message=serializer.validated_data.get('message')
+        )
+        return Response({'message': 'Mails successfully sended'},
+                        status=status.HTTP_201_CREATED)

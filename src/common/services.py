@@ -30,3 +30,8 @@ class SendEmailService:
         email_body, email_subject  = cls.my_message(student)
         email = EmailMessage(subject=email_subject, body=email_body, to=[student.email])
         email.send()
+    
+    @classmethod
+    def mailing(cls, message, emails):
+        email = EmailMessage(subject='Рассылка', body=message, to=emails)
+        email.send()
