@@ -2,6 +2,9 @@ from django.db import models
 from src.common.models import BaseModel
 from src.users.models import Teacher
 
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+
 class School(BaseModel):
     name = models.CharField(max_length=350, verbose_name='Наименвоание')
 
@@ -61,3 +64,8 @@ class Student(BaseModel):
         verbose_name = 'Ученик'
         verbose_name_plural = 'Ученики'
         ordering = ('grade', 'full_name')
+
+
+@receiver(post_save, sender=Student)
+def call_student_api(sender, instance, **kwargs):
+    print(f'Был создан новый ученик {instance}')
