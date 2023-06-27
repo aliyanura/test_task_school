@@ -1,0 +1,31 @@
+version: '3.9'
+
+services:
+  django:
+    image: django-docker:0.0.1
+    build: .
+    env_file:
+      - .env
+    volumes:
+      - .:/tech_task
+      - ./back_static:/tech_task/back_static
+      - ./back_media:/tech_task/back_media
+
+    ports:
+      - 8000:8000
+    command: >
+      sh -c "python manage.py makemigrations &&
+             python manage.py migrate &&
+             python manage.py collectstatic --no-input &&
+             python manage.py runserver 0.0.0.0:8000"
+    depends_on:
+      - db
+    links:
+      - db
+  db:
+    image: postgres:14-alpine
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - /postgresql/data

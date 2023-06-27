@@ -12,6 +12,7 @@ db.sqlite3
 .env
 .idea/
 back_media/
+back_static/
 static/
 media/
 venv/
