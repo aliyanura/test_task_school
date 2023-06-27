@@ -1,4 +1,4 @@
-from src.common.services import Service
+from src.common.services import Service, SendEmailService
 from src.grades.models import Student, Grade
 
 
@@ -12,8 +12,8 @@ class StudentService(Service):
     @classmethod
     def create(cls, data):
         grade = GradeService.get(id=data.get('grade_id'))
-        cls.model.objects.create(
-            full_name=('full_name'),
+        student = cls.model.objects.create(
+            full_name=data.get('full_name'),
             email=data.get('email'),
             birth_date=data.get('birth_date'),
             adress=data.get('adress'),
@@ -21,3 +21,4 @@ class StudentService(Service):
             photo=data.get('photo'),
             grade=grade
         )
+        SendEmailService.send_email(student)
